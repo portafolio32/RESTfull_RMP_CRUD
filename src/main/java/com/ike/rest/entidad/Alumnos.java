@@ -21,22 +21,35 @@ public class Alumnos implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 
-	private Long id;
+	private Long Matricula;
 	private String nombre;
 	private String apellidoPaterno;
 	private String apellidoMaterno;
-	private int Matricula;
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-	@ManyToOne(fetch=FetchType.LAZY)
-	private Calificacion calificacion;
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="matricula",cascade=CascadeType.ALL)
+	List< Calificacion> materias;
 
 
 
-		public Long getId() {
-		return id;
+		public Alumnos() {
+		this.materias = new ArrayList<>();
 	}
-	public void setId(Long id) {
-		this.id = id;
+		public List<Calificacion> getCalificaciones() {
+		return materias;
+	}
+	public void setCalificaciones(List<Calificacion> calificaciones) {
+		this.materias = calificaciones;
+	}
+		public Alumnos(String nombre,String apellidoP,String apellidoM) {
+			this.nombre=nombre;
+			this.apellidoPaterno=apellidoP;
+			this.apellidoMaterno=apellidoM;
+	}
+		public Long getMatricula() {
+		return Matricula;
+	}
+	public void setMatricula(Long id) {
+		this.Matricula = Matricula;
 	}
 	public String getNombre() {
 		return nombre;
@@ -56,15 +69,6 @@ public class Alumnos implements Serializable{
 	public void setApellidoMaterno(String apellidoMaterno) {
 		this.apellidoMaterno = apellidoMaterno;
 	}
-
-	public int getMatricula() {
-		return Matricula;
-	}
-	public void setMatricula(int matricula) {
-		Matricula = matricula;
-	}
-		
-
 
 
 }

@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,13 +18,37 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Calificacion implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long Matricula;
+	private Long id;
+
+	private int Español;
 	private int Matematica;
 	private int Quimica;
 	private int Biologia;
 	private int Fisica;
-	private Alumnos alumnos;
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="matricula")
+	private Alumnos matricula;
+
+	public Calificacion(Long id, int matematica, int quimica, int biologia, int fisica, Alumnos matricula) {
+		super();
+		this.id = id;
+		Matematica = matematica;
+		Quimica = quimica;
+		Biologia = biologia;
+		Fisica = fisica;
+		this.matricula = matricula;
+	}
+	public Calificacion() {
+		super();
+	}
+	
+	public int getEspañol() {
+		return Español;
+	}
+	public void setEspañol(int español) {
+		Español = español;
+	}
 	public int getMatematica() {
 		return Matematica;
 	}
@@ -50,18 +75,7 @@ public class Calificacion implements Serializable{
 	}
 
 
-	public Alumnos getAlumnos() {
-		return alumnos;
-	}
-	public void setAlumnos(Alumnos alumnos) {
-		this.alumnos = alumnos;
-	}
-	public Long getMatricula() {
-		return Matricula;
-	}
-	public void setMatricula(Long matricula) {
-		Matricula = matricula;
-	}
+
 
 	
 

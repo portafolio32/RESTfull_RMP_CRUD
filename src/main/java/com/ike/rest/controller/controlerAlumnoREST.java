@@ -46,7 +46,7 @@ public class controlerAlumnoREST {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Calificacion update(@RequestBody Calificacion calificacion, @PathVariable Long id) {
 		Calificacion materiaActual = calificacionService.findById(id);
-		materiaActual.setMatricula(calificacion.getMatricula());
+		materiaActual.setEspañol(calificacion.getEspañol());
 		materiaActual.setBiologia(calificacion.getBiologia());
 		materiaActual.setFisica(calificacion.getFisica());
 		materiaActual.setMatematica(calificacion.getMatematica());
