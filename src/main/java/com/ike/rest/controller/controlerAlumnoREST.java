@@ -3,6 +3,8 @@ package com.ike.rest.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,10 +38,29 @@ public class controlerAlumnoREST {
 		return alumnosService.findAll();
 	}
 	
-	@GetMapping("/alumnos/{id}")
-	public Alumnos show(@PathVariable Long id) {
+
+	@GetMapping("/alumnos/{nombre}")
+	public Alumnos show(@PathVariable String nombre) {
+		// TODO Auto-generated method stub
+		return alumnosService.filtrobyNombre(nombre);
+	}
+	
+	@PostMapping("/alumnos")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Alumnos create(@RequestBody Alumnos user) {
+		return alumnosService.save(user);
 		
-		return alumnosService.findById(id);
+	}
+	
+	@PutMapping("/alumnos/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Alumnos update(@RequestBody Alumnos alumno, @PathVariable Long id) {
+		Alumnos alumnoActual = alumnosService.findById(id);
+		alumnoActual.setMatricula(alumnoActual.getMatricula());
+		alumnoActual.setApellidoPaterno(alumnoActual.getApellidoPaterno());
+		alumnoActual.setApellidoMaterno(alumnoActual.getApellidoMaterno());
+		alumnoActual.setNombre(alumnoActual.getNombre());
+		return alumnosService.save(alumnoActual);
 	}
 	
 	@PutMapping("/calificacion/{id}")
@@ -55,25 +76,16 @@ public class controlerAlumnoREST {
 		return calificacionService.save(materiaActual);
 	}
 		
-	@PostMapping("/alumnos")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Alumnos create(@RequestBody Alumnos cliente) {
-		return alumnosService.save(cliente);
-		
-	}
+
 
 
 	@DeleteMapping("/alumnos/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.OK)
     public void deleteAlumno(@PathVariable Long id) {
 		alumnosService.delete(id);
 	}
 	
-	@DeleteMapping("/materia/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteMateria(@PathVariable Long id) {
-		calificacionService.delete(id);
-	}
+	
 	
 	
 }

@@ -51,6 +51,8 @@ public class Alumnos implements Serializable{
 	public void setMatricula(Long id) {
 		this.Matricula = Matricula;
 	}
+	
+	
 	public String getNombre() {
 		return nombre;
 	}
